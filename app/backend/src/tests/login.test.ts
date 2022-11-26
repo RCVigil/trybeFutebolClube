@@ -14,7 +14,7 @@ const { app } = new App();
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Teste que cubram no mínimo 5% do back-end', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
