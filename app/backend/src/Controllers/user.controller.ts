@@ -1,19 +1,17 @@
 import { Request, Response } from 'express';
-import IUsersAdd from '../interfaces/users.Interface';
 import UserService from '../service/user.service';
 
 class UserController {
   constructor(
     private service = new UserService(),
   ) {
-    this.userController = this.userController.bind(this);
+    this.login = this.login.bind(this);
   }
 
-  public async userController(req: Request<IUsersAdd>, res: Response) {
-    const Token = await this.service.postUserService(req.body);
-    const { status, message } = Token;
+  public async login(req: Request, res: Response) {
+    const token = await this.service.postUserService(req.body);
 
-    res.status(status).json(`Token: ${message}`);
+    res.status(200).json({ token });
   }
 }
 

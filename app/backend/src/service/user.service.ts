@@ -2,6 +2,7 @@ import { compare } from 'bcryptjs';
 import IUserAdd, { IUser } from '../interfaces/users.Interface';
 import user from '../database/models/UsersModel';
 import Token from '../utils/jwToken';
+import HttpException from '../utils/HttpException';
 
 class UserService {
   postUserService = async (body: IUserAdd) => {
@@ -9,6 +10,7 @@ class UserService {
     const token = new Token();
 
     const userRes = await user.findOne({ where: { email } });
+    console.log('Entrei no Post');
 
     if (userRes !== undefined) {
       const userAprov = userRes && await compare(body.password, userRes.dataValues.password);
@@ -20,10 +22,10 @@ class UserService {
         };
         const tokenRes = token.createdToken(payload);
 
-        return { status: 200, message: tokenRes };
+        return tokenRes;
       }
     }
-    return { status: 401, message: 'Incorrect email or password' };
+    throw new HttpException(401, 'Incorrect email or password');
   };
 }
 
