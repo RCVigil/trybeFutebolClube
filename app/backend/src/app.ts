@@ -22,9 +22,9 @@ class App {
       next();
     };
 
+    this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use('/login', userRoutes);
-    this.app.use(accessControl);
     this.app.use(httpErrorMiddleware);
   }
 
