@@ -10,7 +10,6 @@ class UserService {
     const token = new Token();
 
     const userRes = await user.findOne({ where: { email } });
-    console.log('Entrei no Post');
 
     if (userRes !== undefined) {
       const userAprov = userRes && await compare(body.password, userRes.dataValues.password);

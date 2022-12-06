@@ -17,7 +17,6 @@ class Token {
       this._SECRET,
       this._jwtDefaultConfig,
     );
-    console.log(tokenCreat);
 
     return tokenCreat;
   };
