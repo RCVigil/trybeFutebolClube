@@ -11,4 +11,14 @@ const getTeamsService = async () => {
   }
 };
 
+export const getTeamIdService = async (id: number) => {
+  try {
+    const getForTeamId = await team.findByPk(id);
+
+    return getForTeamId;
+  } catch (error) {
+    throw new HttpException(401, 'Incorrect Team');
+  }
+};
+
 export default getTeamsService;
