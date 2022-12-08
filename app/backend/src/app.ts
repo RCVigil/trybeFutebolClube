@@ -1,7 +1,7 @@
 import * as express from 'express';
 // import { validated } from './Controllers/user.controller';
 import httpErrorMiddleware from './middlewares/Error.middleware';
-import userRoutes from './routes/users.routes';
+import userRoutes from './routes/login.routes';
 
 class App {
   public app: express.Express;
@@ -26,7 +26,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use('/login', userRoutes);
-    // this.app.use('/login/validate', validated);
+    this.app.use('/teams', userRoutes);
     this.app.use(httpErrorMiddleware);
   }
 
