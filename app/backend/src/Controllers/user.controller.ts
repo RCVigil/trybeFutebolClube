@@ -4,11 +4,11 @@ import UserService from '../service/user.service';
 import HttpException from '../utils/HttpException';
 
 class UserController {
-  // constructor(
-  private service = new UserService();
-  // ) {
-  //   this.login = this.login.bind(this);
-  // }
+  constructor(
+    private service = new UserService(),
+  ) {
+    this.login = this.login.bind(this);
+  }
 
   public async login(req: Request, res: Response) {
     const token = await this.service.postUserService(req.body);
