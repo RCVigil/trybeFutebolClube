@@ -6,19 +6,20 @@ import HttpException from '../utils/HttpException';
 
 class UserService {
   postUserService = async (body: IUserAdd) => {
-    const { email } = body;
+    const { email, password } = body;
     const token = new Token();
 
     const userRes = await user.findOne({ where: { email } });
 
     if (userRes !== undefined) {
-      const userAprov = userRes && await compare(body.password, userRes.dataValues.password);
+      const userAprov = userRes && await compare(password, userRes.dataValues.password);
       if (userAprov) {
         const payload: IUser = {
           username: userRes.dataValues.username,
           role: userRes.dataValues.role,
           email: userRes.dataValues.email,
         };
+
         const tokenRes = token.createdToken(payload);
 
         return tokenRes;

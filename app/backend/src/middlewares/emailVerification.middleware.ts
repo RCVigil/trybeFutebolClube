@@ -7,7 +7,6 @@ const emailVerification = (
 ) => {
   const emailVerify = req.body.email;
   const regEmail = (/\S+@\S+\.\S+/);
-  console.log('O EMAIL VERIFY É ===   ', emailVerify);
 
   if (!emailVerify || !regEmail.test(emailVerify)) {
     return res.status(400).json({ message: 'All fields must be filled' });
