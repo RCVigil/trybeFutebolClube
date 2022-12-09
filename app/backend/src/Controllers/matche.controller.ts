@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import getMatchesService, { getMatcheIdService } from '../service/matche.service';
 
 const getMatches = async (_req: Request, res: Response) => {
-  console.log('ENTROU NO GETMATCHE');
   const getedMatche = await getMatchesService();
 
   return res.status(200).json(getedMatche);
