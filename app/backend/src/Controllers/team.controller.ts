@@ -11,7 +11,7 @@ export const getTeamId = async (req: Request, res: Response) => {
   console.log('getTeamsId');
   const { id } = req.params;
 
-  const getTeamsId = await getTeamIdService(+id);
+  const getTeamsId = await getTeamIdService((+id));
   console.log(getTeamsId);
 
   return res.status(200).json(getTeamsId);

@@ -2,11 +2,13 @@ import HttpException from '../utils/HttpException';
 import team from '../database/models/TeamsModel';
 
 const getTeamsService = async () => {
+  console.log('entrei');
   try {
     const getForTeams = await team.findAll();
 
     return getForTeams;
   } catch (error) {
+    console.log(error);
     throw new HttpException(401, 'Incorrect Team');
   }
 };
@@ -17,7 +19,7 @@ export const getTeamIdService = async (id: number) => {
 
     return getForTeamId;
   } catch (error) {
-    throw new HttpException(401, 'Incorrect Team');
+    throw new HttpException(401, 'Incorrect Id');
   }
 };
 

@@ -51,7 +51,7 @@ MatchesModel.belongsTo(TeamsModel, {
   foreignKey: 'homeTeam',
 });
 
-TeamsModel.belongsTo(MatchesModel, {
+TeamsModel.hasMany(MatchesModel, {
   as: 'teamHome',
   foreignKey: 'homeTeam',
 });
@@ -61,7 +61,7 @@ MatchesModel.belongsTo(TeamsModel, {
   foreignKey: 'awayTeam',
 });
 
-TeamsModel.belongsTo(MatchesModel, {
+TeamsModel.hasMany(MatchesModel, {
   as: 'teamAway',
   foreignKey: 'awayTeam',
 });
