@@ -10,7 +10,7 @@ class Token {
   private _SECRET = (process.env.JWT_SECRET as string) || 'jwt_secret1952=ABC-5891';
 
   private _jwtDefaultConfig: SignOptions = {
-    expiresIn: '7h',
+    expiresIn: '2 days',
     algorithm: 'HS256',
   };
 
@@ -21,7 +21,7 @@ class Token {
   };
 }
 
-const getToken = (authorization: string): any => {
+const getToken = (authorization: string) => {
   const token = authorization;
 
   const ScretJwt = process.env.JWT_SECRET as string || 'jwt_secret1952=ABC-5891';

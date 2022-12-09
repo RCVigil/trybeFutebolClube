@@ -24,7 +24,7 @@ export const validated = (req: Request, res: Response) => {
     const token = getToken(authorization);
     console.log(token);
 
-    return res.status(200).json({ role: token.role });
+    return res.status(200).json({ role: token });
   }
   console.log('ENTROU NA !authorization');
 

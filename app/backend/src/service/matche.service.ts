@@ -16,19 +16,4 @@ const getMatchesService = async () => {
   }
 };
 
-export const getMatcheIdService = async (id: number) => {
-  try {
-    const getForMatcheId = await matches.findByPk(id, {
-      include: [
-        { association: 'teamHome', as: 'teamHome', attributes: ['teamName'] },
-        { association: 'teamAway', as: 'teamAway', attributes: ['teamName'] },
-      ],
-    });
-
-    return getForMatcheId;
-  } catch (error) {
-    throw new HttpException(401, 'Incorrect Team');
-  }
-};
-
 export default getMatchesService;

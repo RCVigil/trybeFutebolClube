@@ -8,6 +8,7 @@ const getTeams = async (_req: Request, res: Response) => {
 };
 
 export const getTeamId = async (req: Request, res: Response) => {
+  console.log('getTeamsId');
   const { id } = req.params;
 
   const getTeamsId = await getTeamIdService(+id);
