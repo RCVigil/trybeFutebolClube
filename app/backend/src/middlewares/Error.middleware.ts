@@ -8,6 +8,8 @@ function httpErrorMiddleware(
   _next: NextFunction,
 ): void {
   const { status, message } = err as HttpException;
+  console.log(message, err);
+
   res.status(status || 500).json({ message });
 }
 export default httpErrorMiddleware;
