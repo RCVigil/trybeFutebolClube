@@ -20,13 +20,6 @@ const getMatchesService = async () => {
 export const addMatcheService = async (addingMatche: IAddMatche) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = addingMatche;
 
-  if (!homeTeam || !awayTeam) {
-    throw new HttpException(404, 'There is no team with such id!');
-  }
-
-  if (homeTeam === awayTeam) {
-    throw new HttpException(422, 'It is not possible to create a match with two equal teams');
-  }
   const insertForMatches = await matches.create({
     homeTeam,
     awayTeam,
@@ -34,7 +27,6 @@ export const addMatcheService = async (addingMatche: IAddMatche) => {
     awayTeamGoals,
     inProgress: true,
   });
-
   return insertForMatches;
 };
 
@@ -60,6 +52,12 @@ export const getMatcheQueryService = async (inProgress: string) => {
   }
 };
 
+export const patchMatchIdService = async (id: string) => matches
+  .update(
+    { inProgress: false },
+    { where: { id } },
+  );
+
 export const getMatcheIdService = async (id: number) => {
   try {
     const getForMatcheId = await matches.findByPk(id, {
@@ -74,5 +72,13 @@ export const getMatcheIdService = async (id: number) => {
     throw new HttpException(401, 'Incorrect Team');
   }
 };
+
+// const existingTeamBD = (homeTeam, awayTeam) = {
+//   const getForMatcheIdHome = await matches.findByPk(homeTeam);
+//   const getForMatcheIdAway = await matches.findByPk(awayTeam);
+//   if (!getForMatcheIdHome || !getForMatcheIdAway) {
+//     throw new HttpException(404, 'There is no team with such id!');
+//   }
+// };
 
 export default getMatchesService;

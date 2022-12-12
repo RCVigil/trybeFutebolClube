@@ -4,6 +4,7 @@ import getMatchesService, {
   addMatcheService,
   getMatcheIdService,
   getMatcheQueryService,
+  patchMatchIdService,
 } from '../service/matche.service';
 import HttpException from '../utils/HttpException';
 
@@ -65,6 +66,15 @@ export const getMatchesId = async (req: Request, res: Response) => {
   const { id } = req.params;
   const getMatcheId = await getMatcheIdService(+id);
   return res.status(200).json(getMatcheId);
+};
+
+export const patchControlleMatche = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  console.log(id);
+
+  await patchMatchIdService(id);
+
+  return res.status(200).json({ message: 'Finished' });
 };
 
 export default getMatches;
