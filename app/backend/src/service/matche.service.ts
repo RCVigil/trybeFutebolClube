@@ -18,6 +18,13 @@ const getMatchesService = async () => {
 };
 
 export const addMatcheService = async (addingMatche: IAddMatche) => {
+  console.log(
+    'ADDINGMATCHE É:',
+    addingMatche,
+    'TYPEOF DELE É == > ',
+    typeof addingMatche.awayTeamGoals,
+  );
+
   try {
     const insertForMatches = await matches.create({
       homeTeam: addingMatche.homeTeam,

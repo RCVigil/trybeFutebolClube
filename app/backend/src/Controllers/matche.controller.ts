@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
+import { getToken } from '../utils/jwToken';
 import getMatchesService, {
   addMatcheService,
   getMatcheIdService,
   getMatcheQueryService,
 } from '../service/matche.service';
+import HttpException from '../utils/HttpException';
 
 const getMatches = async (req: Request, res: Response) => {
   const { inProgress } = req.query;
@@ -16,24 +18,47 @@ const getMatches = async (req: Request, res: Response) => {
   return res.status(200).json(getedMatche);
 };
 
-export const insertMatches = async (req: Request, res: Response) => {
-  const { inProgress } = req.query;
-  const addingMatche = req.body;
+const matcheAddFunc = (authorization: string) => {
+  if (!authorization) {
+    throw new HttpException(401, 'Token must be a valid token');
+  } else {
+    return getToken(authorization);
+  }
+};
 
-  if (inProgress) {
+const authInProgress = async (requeriment: Request) => {
+  const { inProgress } = requeriment.query;
+  const addingMatche = requeriment.body;
+  const { authorization } = requeriment.headers;
+  console.log('INPREGRESS ', inProgress);
+  console.log('ADDINGMATCHE ', addingMatche);
+  console.log('AUTHORIZATION ', authorization);
+
+  if (authorization) {
+    matcheAddFunc(authorization);
     const id = await addMatcheService(addingMatche);
-
-    const inMatche = {
-      id: id.id,
+    const inMatche = { id: id.id,
       homeTeam: id.homeTeam,
       awayTeam: id.awayTeam,
       homeTeamGoals: id.homeTeamGoals,
       awayTeamGoals: id.awayTeamGoals,
       inProgress: id.inProgress };
-    console.log('INMATCHE É AQUI === >   ', inMatche);
 
-    return res.status(201).json(inMatche);
+    return inMatche;
   }
+};
+
+export const insertMatches = async (req: Request, res: Response) => {
+  const requeriment = req;
+  console.log(
+    'O REQ.QUERY NO MATCHECONTROLLER É:',
+    req.query,
+    'O REQ.BODY NO MATCHECONTROLLER === >',
+    req.body,
+  );
+  const inMatche = await authInProgress(requeriment);
+  console.log('INMATCHE NA FUNC INSERTMATCHE DA CONTROLLER:    ', inMatche);
+  return res.status(201).json(inMatche);
 };
 
 export const getMatchesId = async (req: Request, res: Response) => {

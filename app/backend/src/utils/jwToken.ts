@@ -21,7 +21,7 @@ class Token {
   };
 }
 
-const getToken = (authorization: string) => {
+export const getToken = (authorization: string): any => {
   const token = authorization;
 
   const ScretJwt = process.env.JWT_SECRET as string || 'jwt_secret1952=ABC-5891';
@@ -36,5 +36,3 @@ const getToken = (authorization: string) => {
 };
 
 export default Token;
-
-export { getToken };

@@ -12,7 +12,7 @@ export const getTeamId = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const getTeamsId = await getTeamIdService((+id));
-  console.log(getTeamsId);
+  console.log('FUNC GETTEAMID:  ', getTeamsId);
 
   return res.status(200).json(getTeamsId);
 };
