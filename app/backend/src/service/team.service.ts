@@ -2,7 +2,6 @@ import HttpException from '../utils/HttpException';
 import team from '../database/models/TeamsModel';
 
 const getTeamsService = async () => {
-  console.log('entrei');
   try {
     const getForTeams = await team.findAll();
 

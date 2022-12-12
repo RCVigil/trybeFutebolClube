@@ -1,5 +1,6 @@
 import HttpException from '../utils/HttpException';
 import matches from '../database/models/matchesModel';
+import { IAddMatche } from '../interfaces/Matche.interface';
 
 const getMatchesService = async () => {
   try {
@@ -11,6 +12,22 @@ const getMatchesService = async () => {
     });
 
     return getForMatches;
+  } catch (error) {
+    throw new HttpException(401, 'Incorrect Matches');
+  }
+};
+
+export const addMatcheService = async (addingMatche: IAddMatche) => {
+  try {
+    const insertForMatches = await matches.create({
+      homeTeam: addingMatche.homeTeam,
+      awayTeam: addingMatche.awayTeam,
+      homeTeamGoals: addingMatche.homeTeamGoals,
+      awayTeamGoals: addingMatche.awayTeamGoals,
+      inProgress: true,
+    });
+
+    return insertForMatches;
   } catch (error) {
     throw new HttpException(401, 'Incorrect Matches');
   }
