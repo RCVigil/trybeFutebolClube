@@ -18,26 +18,24 @@ const getMatchesService = async () => {
 };
 
 export const addMatcheService = async (addingMatche: IAddMatche) => {
-  console.log(
-    'ADDINGMATCHE É:',
-    addingMatche,
-    'TYPEOF DELE É == > ',
-    typeof addingMatche.awayTeamGoals,
-  );
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = addingMatche;
 
-  try {
-    const insertForMatches = await matches.create({
-      homeTeam: addingMatche.homeTeam,
-      awayTeam: addingMatche.awayTeam,
-      homeTeamGoals: addingMatche.homeTeamGoals,
-      awayTeamGoals: addingMatche.awayTeamGoals,
-      inProgress: true,
-    });
-
-    return insertForMatches;
-  } catch (error) {
-    throw new HttpException(401, 'Incorrect Matches');
+  if (!homeTeam || !awayTeam) {
+    throw new HttpException(404, 'There is no team with such id!');
   }
+
+  if (homeTeam === awayTeam) {
+    throw new HttpException(422, 'It is not possible to create a match with two equal teams');
+  }
+  const insertForMatches = await matches.create({
+    homeTeam,
+    awayTeam,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: true,
+  });
+
+  return insertForMatches;
 };
 
 const validatedInProgress = async (inProgress: string) => {
