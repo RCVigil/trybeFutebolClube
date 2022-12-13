@@ -4,6 +4,7 @@ import getMatchesService, {
   addMatcheService,
   getMatcheIdService,
   getMatcheQueryService,
+  patchMatcheIdService,
   patchMatchIdService,
 } from '../service/matche.service';
 import HttpException from '../utils/HttpException';
@@ -75,6 +76,17 @@ export const patchControlleMatche = async (req: Request, res: Response) => {
   await patchMatchIdService(id);
 
   return res.status(200).json({ message: 'Finished' });
+};
+
+export const patchMatcheId = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  console.log('REQ.BODY NO CONTROLLER É == >   ', req.body);
+
+  const patchMatId = await patchMatcheIdService(id, homeTeamGoals, awayTeamGoals);
+  console.log('O PATCHMATID NO CONTROLLER É: ', patchMatId);
+
+  return res.status(200).json({ message: 'updated' });
 };
 
 export default getMatches;

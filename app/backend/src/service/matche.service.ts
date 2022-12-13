@@ -66,6 +66,25 @@ export const patchMatchIdService = async (id: string) => matches
     { where: { id } },
   );
 
+export const patchMatcheIdService = async (
+  id: string,
+  homeTeamGoals: string,
+  awayTeamGoals: string,
+) => {
+  if (homeTeamGoals) {
+    await matches.update(
+      { homeTeamGoals },
+      { where: { id } },
+    );
+  }
+  if (awayTeamGoals) {
+    await matches.update(
+      { awayTeamGoals },
+      { where: { id } },
+    );
+  }
+};
+
 export const getMatcheIdService = async (id: number) => {
   try {
     const getForMatcheId = await matches.findByPk(id, {
