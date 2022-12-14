@@ -29,12 +29,8 @@ const matcheAddFunc = (authorization: string) => {
 };
 
 const authInProgress = async (requeriment: Request) => {
-  const { inProgress } = requeriment.query;
   const addingMatche = requeriment.body;
   const { authorization } = requeriment.headers;
-  console.log('INPREGRESS ', inProgress);
-  console.log('ADDINGMATCHE ', addingMatche);
-  console.log('AUTHORIZATION ', authorization);
 
   if (authorization) {
     matcheAddFunc(authorization);
@@ -52,14 +48,9 @@ const authInProgress = async (requeriment: Request) => {
 
 export const insertMatches = async (req: Request, res: Response) => {
   const requeriment = req;
-  console.log(
-    'O REQ.QUERY NO MATCHECONTROLLER É:',
-    req.query,
-    'O REQ.BODY NO MATCHECONTROLLER === >',
-    req.body,
-  );
+
   const inMatche = await authInProgress(requeriment);
-  console.log('INMATCHE NA FUNC INSERTMATCHE DA CONTROLLER:    ', inMatche);
+
   return res.status(201).json(inMatche);
 };
 
@@ -71,7 +62,6 @@ export const getMatchesId = async (req: Request, res: Response) => {
 
 export const patchControlleMatche = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id);
 
   await patchMatchIdService(id);
 
@@ -81,10 +71,8 @@ export const patchControlleMatche = async (req: Request, res: Response) => {
 export const patchMatcheId = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { homeTeamGoals, awayTeamGoals } = req.body;
-  console.log('REQ.BODY NO CONTROLLER É == >   ', req.body);
 
-  const patchMatId = await patchMatcheIdService(id, homeTeamGoals, awayTeamGoals);
-  console.log('O PATCHMATID NO CONTROLLER É: ', patchMatId);
+  await patchMatcheIdService(id, homeTeamGoals, awayTeamGoals);
 
   return res.status(200).json({ message: 'updated' });
 };
